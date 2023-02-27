@@ -31,5 +31,6 @@
 
     3) Symbol에 사용되는 기본적인 CustomControl을 구성하여 Gis Map상 오브젝트로 설정하였다.  
     4) 맵의 Scale에 따라 ProgressBar를 연동하여 데이터 변동을 확인하였다. (일부 버그가 확인되어 디버깅이 필요함.)  
+    5) CustomControl의 Datatrigger로 애니메이션 동작 여부를 정하기 위해서 DependencyProperty 설정하였으나 작동 안함.  
 
 <hr>
