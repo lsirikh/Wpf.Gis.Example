@@ -34,45 +34,34 @@
 							Height="{TemplateBinding WholeSize}"
                             BorderThickness="{TemplateBinding BorderThickness}"
 							x:Name="PART_whole">
+							<Border.Style>
+								<Style TargetType="Border">
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding IsAnimated, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+											<DataTrigger.EnterActions>
+												<BeginStoryboard>
+													<Storyboard>
+														<DoubleAnimation 
+															 Storyboard.TargetProperty="(Border.RenderTransform).(RotateTransform.Angle)" 
+															 From="{Binding WholeAngle, RelativeSource={RelativeSource TemplatedParent}}" 
+															 To="180" 
+															 AccelerationRatio="0.5"
+															 SpeedRatio="1.5"
+															 DecelerationRatio="0.5"
+															 BeginTime="00:00:01.000" 
+															 Duration="00:00:03.000" 
+															 RepeatBehavior="Forever"
+															 AutoReverse="True" />
+													</Storyboard>
+												</BeginStoryboard>
+											</DataTrigger.EnterActions>
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</Border.Style>
 							<Border.Triggers>
-							<!-- IsAnimated이 True일 때, Animation trigger 발동 -->
-								<DataTrigger Binding="{Binding IsAnimated, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
-									<DataTrigger.EnterActions>
-										<BeginStoryboard>
-											<Storyboard>
-												<DoubleAnimation Storyboard.TargetName="PART_whole"
-															 Storyboard.TargetProperty="(Border.RenderTransform).(RotateTransform.Angle)" 
-															 From="{Binding WholeAngle, RelativeSource={RelativeSource TemplatedParent}}" 
-															 To="180" 
-															 AccelerationRatio="0.5"
-															 SpeedRatio="1.5"
-															 DecelerationRatio="0.5"
-															 BeginTime="00:00:01.000" 
-															 Duration="00:00:03.000" 
-															 RepeatBehavior="Forever"
-															 AutoReverse="True" />
-											</Storyboard>
-										</BeginStoryboard>
-									</DataTrigger.EnterActions>
-								</DataTrigger>
-								<!-- Border 로드 시, Animation trigger 발동 -->
-								<!--<EventTrigger RoutedEvent="Border.Loaded">
-									<BeginStoryboard>
-										<Storyboard>
-											<DoubleAnimation Storyboard.TargetName="PART_whole"
-															 Storyboard.TargetProperty="(Border.RenderTransform).(RotateTransform.Angle)" 
-															 From="{Binding WholeAngle, RelativeSource={RelativeSource TemplatedParent}}" 
-															 To="180" 
-															 AccelerationRatio="0.5"
-															 SpeedRatio="1.5"
-															 DecelerationRatio="0.5"
-															 BeginTime="00:00:01.000" 
-															 Duration="00:00:03.000" 
-															 RepeatBehavior="Forever"
-															 AutoReverse="True" />
-										</Storyboard>
-									</BeginStoryboard>
-								</EventTrigger>-->
+								
+								
 							</Border.Triggers>
 							<Border.RenderTransformOrigin>
 								<Point X="0.5" Y="0.5"/>
@@ -83,11 +72,13 @@
 									Angle="{Binding WholeAngle, RelativeSource={RelativeSource TemplatedParent}}" CenterX="0" CenterY="0"/>
 							</Border.RenderTransform>
 							<Grid>
-								<!--<Grid.Triggers>
+								<!--
+								<Grid.Triggers>
 									<EventTrigger RoutedEvent="Grid.MouseRightButtonDown">
 										<BeginStoryboard Storyboard="{StaticResource RotateAnimation }"/>
 									</EventTrigger>
-								</Grid.Triggers>-->
+								</Grid.Triggers>
+								-->
 								<Rectangle x:Name="PART_body" 
 										   Fill="Red"
 										   Stroke="White"
