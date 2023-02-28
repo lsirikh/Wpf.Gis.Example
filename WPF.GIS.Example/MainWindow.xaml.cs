@@ -55,18 +55,18 @@ namespace WPF.GIS.Example
         }
         ~MainWindow()
         {
-            mapControl.Dispose();
+            
         }
 
         void mapControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Point clickPoint = e.GetPosition(mapControl);
             Random random = new Random();
-            var angle = random.NextDouble()* 360;
+            var angle = random.NextDouble() * 360;
             var num = random.Next(1, 100);
             var title = $"{num}부대";
             var isAnimated = random.NextDouble() * 10 > 5 ? true : false;
-            var symbole = new SymbolTest() { WholeAngle = angle, SymbolTitle = title, IsAnimated = isAnimated};
+            var symbole = new SymbolTest() { WholeAngle = angle, SymbolTitle = title, IsAnimated = isAnimated };
             PointLatLng point = mapControl.FromLocalToLatLng((int)(clickPoint.X - (symbole.WholeSize / 2)), (int)(clickPoint.Y - (symbole.WholeSize / 2)));
             GMapMarker marker = new GMapMarker(point);
             //marker.Shape = new Ellipse
@@ -116,6 +116,11 @@ namespace WPF.GIS.Example
             c.Width = 55 + pxCircleRadius * 2;
             c.Height = 55 + pxCircleRadius * 2;
             (c.Tag as GMapMarker).Offset = new Point(-c.Width / 2, -c.Height / 2);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            mapControl.Dispose();
         }
     }
 }
