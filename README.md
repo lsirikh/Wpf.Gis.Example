@@ -56,6 +56,13 @@
 * Version : v1.0.0  
 
 * 개발 내역  
-      1) GMapControl을 자체 CustomControl로 변경하여 작업을 하고자 하였으나, 기존에 구성하고 있던 FrameworkElement의 필수 구성요소가 충족되지 않아 만들지 못했다.  
-      2) CustomControl에 GMapControl만 Wrapping하려고 하였으나 지도가 나타나지 않는 문제가 발행하였다.  
+
+
+      1) GMap.Net의 기능중 Offline활용이 가능한 부분을 확인하기 위해 테스트를 진행하였다.  오프라인에서 사용하기 위해서는 gmdb의 파일을 만들어서 importing하는 작업이 필요하다.  
+        a) 먼저 MapProvider에서 제공하는 지도의 종류를 선택한다.  
+        b) 원하는 위치에서 Alt+LeftMouseButton을 하고, 저장하고자 하는 지도의 공간을 선택한다.   
+        c) Prefetch 버튼을 클릭하여 저장한다. (단, 여러차례 Zoom 레벨에 맞게 지도 파일을 구성하는 작업을 한다. 최대 Zoom = 22 까지 진행하면, 작은 구역을 선택해도 몇 만개의 Textile 파일을 구성해서 저장하게 될 수 있다.)  
+        d) 마지막으로 반드시 파일을 Import 해줘야 한다. 이렇게 하면, Offline 환경에서도 지도파일을 불러와 GMap.Net 라이브러리에서 동작을 시킬 수 있다.  
+      2) GMapControl을 자체 CustomControl로 변경하여 작업을 하고자 하였으나, 기존에 구성하고 있던 FrameworkElement의 필수 구성요소가 충족되지 않아 만들지 못했다.  
+      3) CustomControl에 GMapControl만 Wrapping하려고 하였으나 지도가 나타나지 않는 문제가 발행하였다.  
     
