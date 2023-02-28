@@ -51,3 +51,11 @@
          b) 
 
 <hr>
+### Update Date: 2023/02/28  
+
+* Version : v1.0.0  
+
+* 개발 내역  
+      1) GMapControl을 자체 CustomControl로 변경하여 작업을 하고자 하였으나, 기존에 구성하고 있던 FrameworkElement의 필수 구성요소가 충족되지 않아 만들지 못했다.  
+      2) CustomControl에 GMapControl만 Wrapping하려고 하였으나 지도가 나타나지 않는 문제가 발행하였다.  
+    

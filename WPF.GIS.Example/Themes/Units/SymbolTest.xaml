@@ -34,7 +34,7 @@
 							Height="{TemplateBinding WholeSize}"
                             BorderThickness="{TemplateBinding BorderThickness}"
 							x:Name="PART_whole">
-							<Border.Style>
+							<!--<Border.Style>
 								<Style TargetType="Border">
 									<Style.Triggers>
 										<DataTrigger Binding="{Binding IsAnimated, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
@@ -58,7 +58,7 @@
 										</DataTrigger>
 									</Style.Triggers>
 								</Style>
-							</Border.Style>
+							</Border.Style>-->
 							
 							<Border.RenderTransformOrigin>
 								<Point X="0.5" Y="0.5"/>

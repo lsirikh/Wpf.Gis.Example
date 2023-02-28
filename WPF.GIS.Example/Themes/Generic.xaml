@@ -5,6 +5,9 @@
 
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="/WPF.GIS.Example;Component/Themes/Units/SymbolTest.xaml"/>
+		<ResourceDictionary Source="/WPF.GIS.Example;Component/Themes/Views/MapBase.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
+    
+
     
 </ResourceDictionary>
