@@ -42,17 +42,64 @@ namespace WPF.GIS.Example
             GoogleMapProvider.Instance.ApiKey = "AIzaSyCXJrDpszuNQfMEXKIifx5zYzhSq3Irpyg";
 
             // config map
-            mapControl.MapProvider = GMapProviders.GoogleHybridMap;
-            mapControl.Position = new PointLatLng(37.648425, 126.904284);
-            mapControl.MinZoom = 2;
-            mapControl.MaxZoom = 17;
-            mapControl.Zoom = 13;
-            mapControl.ShowCenter = false;
-            mapControl.DragButton = MouseButton.Left;
-            mapControl.Position = new PointLatLng(35.696874, 128.457701);
+            MainMap.MapProvider = GMapProviders.GoogleHybridMap;
+            MainMap.Position = new PointLatLng(37.648425, 126.904284);
+            MainMap.MinZoom = 1;
+            MainMap.MaxZoom = 17;
+            MainMap.Zoom = 11;
+            MainMap.ShowCenter = false;
+            MainMap.DragButton = MouseButton.Left;
 
-            mapControl.MouseLeftButtonDown += new MouseButtonEventHandler(mapControl_MouseLeftButtonDown);
+
+            //MainMap.TouchEnabled = false;
+            MainMap.MultiTouchEnabled = true;
+            MainMap.MouseLeftButtonDown += new MouseButtonEventHandler(mapControl_MouseLeftButtonDown);
+
+
+            MainMap.OnPositionChanged += MainMap_OnCurrentPositionChanged;
+            MainMap.OnTileLoadComplete += MainMap_OnTileLoadComplete;
+            MainMap.OnTileLoadStart += MainMap_OnTileLoadStart;
+            MainMap.OnMapTypeChanged += MainMap_OnMapTypeChanged;
+            MainMap.MouseMove += MainMap_MouseMove;
+            MainMap.MouseLeftButtonDown += MainMap_MouseLeftButtonDown;
+            MainMap.MouseEnter += MainMap_MouseEnter;
         }
+
+        private void MainMap_OnCurrentPositionChanged(PointLatLng point)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MainMap_OnTileLoadComplete(long elapsedMilliseconds)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MainMap_OnTileLoadStart()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MainMap_OnMapTypeChanged(GMapProvider type)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MainMap_MouseMove(object sender, MouseEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MainMap_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MainMap_MouseEnter(object sender, MouseEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         ~MainWindow()
         {
             
@@ -60,25 +107,19 @@ namespace WPF.GIS.Example
 
         void mapControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Point clickPoint = e.GetPosition(mapControl);
+            Point clickPoint = e.GetPosition(MainMap);
             Random random = new Random();
             var angle = random.NextDouble() * 360;
             var num = random.Next(1, 100);
             var title = $"{num}부대";
             var isAnimated = random.NextDouble() * 10 > 5 ? true : false;
             var symbole = new SymbolTest() { WholeAngle = angle, SymbolTitle = title, IsAnimated = isAnimated };
-            PointLatLng point = mapControl.FromLocalToLatLng((int)(clickPoint.X - (symbole.WholeSize / 2)), (int)(clickPoint.Y - (symbole.WholeSize / 2)));
+            PointLatLng point = MainMap.FromLocalToLatLng((int)(clickPoint.X - (symbole.WholeSize / 2)), (int)(clickPoint.Y - (symbole.WholeSize / 2)));
             GMapMarker marker = new GMapMarker(point);
-            //marker.Shape = new Ellipse
-            //{
-            //    Width = 10,
-            //    Height = 10,
-            //    Stroke = Brushes.Black,
-            //    StrokeThickness = 1.5
-            //};
+            
             marker.Shape = symbole;
 
-            mapControl.Markers.Add(marker);
+            MainMap.Markers.Add(marker);
         }
 
         // zoom changed
@@ -94,20 +135,20 @@ namespace WPF.GIS.Example
         // zoom up
         private void czuZoomUp_Click(object sender, RoutedEventArgs e)
         {
-            mapControl.Zoom = (int)mapControl.Zoom + 1;
+            MainMap.Zoom = (int)MainMap.Zoom + 1;
         }
 
         // zoom down
         private void czuZoomDown_Click(object sender, RoutedEventArgs e)
         {
-            mapControl.Zoom = (int)(mapControl.Zoom + 0.99) - 1;
+            MainMap.Zoom = (int)(MainMap.Zoom + 0.99) - 1;
         }
 
         // calculates circle radius
         void UpdateCircle(Circle c)
         {
-            var pxCenter = mapControl.FromLatLngToLocal(c.Center);
-            var pxBounds = mapControl.FromLatLngToLocal(c.Bound);
+            var pxCenter = MainMap.FromLatLngToLocal(c.Center);
+            var pxBounds = MainMap.FromLatLngToLocal(c.Bound);
 
             double a = pxBounds.X - pxCenter.X;
             double b = pxBounds.Y - pxCenter.Y;
@@ -120,7 +161,7 @@ namespace WPF.GIS.Example
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            mapControl.Dispose();
+            MainMap.Dispose();
         }
     }
 }

@@ -4,16 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.GIS.Example"
-		xmlns:map="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
-		xmlns:views="clr-namespace:WPF.GIS.Example.UI.Views"
 		xmlns:viewModel="clr-namespace:WPF.GIS.Example.ViewModels"
+		xmlns:map="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 	<Window.DataContext>
 		<viewModel:MainWindowViewModel x:Name="ViewModel"/>
 	</Window.DataContext>
 	<Window.Resources>
-		<!--<Style x:Key="ZoomUpButton" TargetType="Button">
+		<Style x:Key="ZoomUpButton" TargetType="Button">
 			<Setter Property="Width" Value="23.5" />
 			<Setter Property="Height" Value="25.5" />
 			<Setter Property="Template">
@@ -77,13 +76,14 @@
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
-		</Style>-->
+		</Style>
 	</Window.Resources>
     <Grid>
-		<!--<GroupBox 
+		<GroupBox 
 			Header="Maps"
 			Name="mapgroup" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-			<map:MapControl x:Name="mapControl" Zoom="13" MaxZoom="24" MinZoom="1" />
+			<map:GMapControl x:Name="MainMap" Zoom="13" MaxZoom="24" MinZoom="1" />
+
 		</GroupBox>
 		<GroupBox 
 			Header="Zoom"
@@ -92,20 +92,20 @@
 				<Button x:Name="CzuZoomUp" Style="{StaticResource ZoomUpButton}" HorizontalAlignment="Center"
                         VerticalAlignment="Top" Width="23.5" Height="25.5" Click="czuZoomUp_Click" />
 				<Slider Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Stretch" Maximum="17"
-                        Minimum="12" Value="{Binding ElementName=mapControl, Path=Zoom}" TickPlacement="Both"
+                        Minimum="12" Value="{Binding ElementName=MainMap, Path=Zoom}" TickPlacement="Both"
                         Margin="0,35,0,35" SmallChange="1" x:Name="SliderZoom" ValueChanged="sliderZoom_ValueChanged" />
 				<Button Style="{StaticResource ZoomDownButton}" x:Name="CzuZoomDown" HorizontalAlignment="Center"
                         VerticalAlignment="Bottom" Width="23" Height="25" Click="czuZoomDown_Click" />
 			</Grid>
-		</GroupBox>-->
+		</GroupBox>
 
 		<!-- 사용하고 싶은 CustomControl -->
-		<views:MapBase x:Name="mapControl" 
+		<!--<views:MapBase x:Name="mapControl" 
 					   Zoom="13" 
 					   MaxZoom="24" 
 					   MinZoom="1" 
 					   Visibility="Visible"
-					   />
+					   />-->
 
 		<!-- GMap에서 제공하는 자체 Control -->
 		<!--<map:GMapControl x:Name="mapControl" Zoom="13" MaxZoom="24" MinZoom="1" />-->

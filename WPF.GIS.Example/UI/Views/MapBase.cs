@@ -58,7 +58,7 @@ namespace WPF.GIS.Example.UI.Views
         {
             //coordinateLatLon = Template.FindName("PART_coordinateLatLon", this) as TextBlock;
             gMapControl = Template.FindName("PART_mainMap", this) as GMapControl;
-            gMapControl.DataContext = this;
+            //gMapControl.DataContext = this;
 
             //Binding coordinateLatLonBinding = new Binding
             //{
@@ -67,6 +67,12 @@ namespace WPF.GIS.Example.UI.Views
             //};
 
             //coordinateLatLon.SetBinding(TextBlock.TextProperty, coordinateLatLonBinding);
+        }
+
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+
+            base.OnRender(drawingContext);
         }
         #endregion
         #region - Binding Methods -
