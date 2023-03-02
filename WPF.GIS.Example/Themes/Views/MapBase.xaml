@@ -7,18 +7,24 @@
 	>
 
 	<Style TargetType="{x:Type views:MapBase}">
+		<Setter Property="Visibility" Value="Visible"/>
+		<Setter Property="Background" Value="Black"/>
 		<!--<Setter Property="CoordinateLatLon" Value=""/>-->
 		<Setter Property="Template">
             <Setter.Value>
 				<ControlTemplate TargetType="{x:Type views:MapBase}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-							x:Name="PART_topBorder">
-
-						<map:GMapControl Visibility="Visible"
+					<map:GMapControl Visibility="{TemplateBinding Visibility}"
+									 Background="{TemplateBinding Background}"
 										 x:Name="PART_mainMap"
 										 Zoom="13" MaxZoom="24" MinZoom="1" />
+					<!--<Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+							x:Name="PART_topBorder">-->
+
+						<!--<map:GMapControl Visibility="Visible"
+										 x:Name="PART_mainMap"
+										 Zoom="13" MaxZoom="24" MinZoom="1" />-->
 						<!--<Grid x:Name="PART_topGrid">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="1*"/>
@@ -45,7 +51,7 @@
 								</map:GMapControl>
 							</Grid>
 						</Grid>-->
-					</Border>
+					<!--</Border>-->
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
