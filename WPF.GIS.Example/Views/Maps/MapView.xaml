@@ -5,9 +5,138 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF.GIS.Example.Views.Maps"
 			 xmlns:userControl="clr-namespace:WPF.GIS.Example.UserControls"
+			 xmlns:cal="http://caliburnmicro.com"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+	<UserControl.Resources>
+		<Style x:Key="ZoomUpButton" TargetType="Button">
+			<Setter Property="Width" Value="23.5" />
+			<Setter Property="Height" Value="25.5" />
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Grid Width="23.5" Height="25.5">
+							<Image Source="/WPF.GIS.Example;component/Resources/zoom+.png" Stretch="Fill" />
+							<ContentPresenter HorizontalAlignment="Center" />
+						</Grid>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter Property="Effect">
+									<Setter.Value>
+										<DropShadowEffect ShadowDepth="2" />
+									</Setter.Value>
+								</Setter>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style x:Key="ZoomDownButton" TargetType="Button">
+			<Setter Property="Width" Value="23.5" />
+			<Setter Property="Height" Value="25.5" />
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Grid Width="23.5" Height="25.5">
+							<Image Source="/WPF.GIS.Example;component/Resources/zoom-.png" Stretch="Fill" />
+							<ContentPresenter HorizontalAlignment="Center" />
+						</Grid>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter Property="Effect">
+									<Setter.Value>
+										<DropShadowEffect ShadowDepth="2" />
+									</Setter.Value>
+								</Setter>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<Style TargetType="{x:Type GroupBox}">
+			<Setter Property="Background" Value="Gray"/>
+			<Setter Property="Margin" Value="5"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type GroupBox}">
+						<Border Background="{TemplateBinding Background}"
+								CornerRadius="5"
+								Padding="5"
+								BorderThickness="2">
+							<Grid>
+								<ContentPresenter />
+							</Grid>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</UserControl.Resources>
     <Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="50"/>
+		</Grid.ColumnDefinitions>
 		<userControl:GMapUserControl Content="{Binding MainMap}"/>
+		<TextBlock Text="{Binding MainMap.Zoom, FallbackValue=11, StringFormat={}Zoom:{0} }" 
+				   Background='#88FFFFFF'
+				   Padding="5"
+				   FontSize="15"
+				   FontWeight="Bold"
+				   Foreground="Black"
+				   Margin="10"
+				   HorizontalAlignment="Right" 
+				   VerticalAlignment="Bottom"/>
+
+		<Border Grid.Column="1"
+				
+				BorderBrush="Gray" 
+				BorderThickness="2" 
+				CornerRadius="5"
+				Padding="0 10"
+				>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="40"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="40"/>
+				</Grid.RowDefinitions>
+				<Button x:Name="ZoomUp" 
+						Grid.Row="0"
+						Style="{StaticResource ZoomUpButton}" 
+						HorizontalAlignment="Center"
+						cal:Message.Attach="[Event Click] = [Action OnClickZoomUp($source, $eventArgs)]"
+						VerticalAlignment="Top"
+						Width="23.5" 
+						Height="25.5" 
+						/>
+				<Slider x:Name="SliderZoom" 
+						Orientation="Vertical"
+						Grid.Row="1"
+						HorizontalAlignment="Center" 
+						VerticalAlignment="Stretch" 
+						Maximum="20"
+						Minimum="{Binding MainMap.MinZoom, UpdateSourceTrigger=PropertyChanged}" 
+						Value="{Binding MainMap.Zoom, UpdateSourceTrigger=PropertyChanged}" 
+						TickPlacement="Both"
+						ToolTip="{Binding MainMap.Zoom, UpdateSourceTrigger=PropertyChanged}"
+						SmallChange="1" 
+						/>
+				<Button x:Name="ZoomDown" 
+						Grid.Row="2"
+						Style="{StaticResource ZoomDownButton}" 
+						HorizontalAlignment="Center"
+						cal:Message.Attach="[Event Click] = [Action OnClickZoomDown($source, $eventArgs)]"
+						VerticalAlignment="Bottom"
+						Width="23" 
+						Height="25"  
+						/>
+			</Grid>
+		</Border>
+		
 	</Grid>
 </UserControl>

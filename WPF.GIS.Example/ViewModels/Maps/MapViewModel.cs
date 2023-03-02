@@ -7,12 +7,14 @@ using Ironwall.Libraries.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using WPF.GIS.Example.CustomMarkers;
 using WPF.GIS.Example.UI.Views;
@@ -54,7 +56,7 @@ namespace WPF.GIS.Example.ViewModels.Maps
             MainMap.MapProvider = GMapProviders.GoogleHybridMap;
             MainMap.Position = new PointLatLng(37.648425, 126.904284);
             MainMap.MinZoom = 1;
-            MainMap.MaxZoom = 17;
+            MainMap.MaxZoom = 24;
             MainMap.Zoom = 11;
             MainMap.ShowCenter = false;
             MainMap.DragButton = MouseButton.Left;
@@ -72,11 +74,27 @@ namespace WPF.GIS.Example.ViewModels.Maps
             MainMap.MouseMove += MainMap_MouseMove;
             MainMap.MouseLeftButtonDown += MainMap_MouseLeftButtonDown;
             MainMap.MouseEnter += MainMap_MouseEnter;
+            MainMap.OnMapZoomChanged += MainMap_OnMapZoomChanged;
 
+            ZoomMax = MainMap.MaxZoom;
+            ZoomMin = MainMap.MinZoom;
             return base.OnActivateAsync(cancellationToken);
+        }
+
+        private void MainMap_OnMapZoomChanged()
+        {
+            Debug.WriteLine($"Zoom : {MainMap.Zoom}");
         }
         #endregion
         #region - Binding Methods -
+        public void OnClickZoomUp(object sender, EventArgs args)
+        {
+            MainMap.Zoom = (int)MainMap.Zoom + 1;
+        }
+        public void OnClickZoomDown(object sender, EventArgs args)
+        {
+            MainMap.Zoom = (int)(MainMap.Zoom + 0.99) - 1;
+        }
         #endregion
         #region - Processes -
         private void MainMap_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -160,16 +178,46 @@ namespace WPF.GIS.Example.ViewModels.Maps
         #region - IHanldes -
         #endregion
         #region - Properties -
-        //private MapBase _gMapControl;
-
-        //public MapBase GMapControl
-        //{
-        //    get => _gMapControl;
-        //    set => SetProperty(ref _gMapControl, ref value);
-        //}
-
-
         public GMapControl MainMap { get; set; }
+
+        public double Zoom
+        {
+            get { return MainMap.Zoom; }
+            set
+            {
+                MainMap.Zoom = value;
+                NotifyOfPropertyChange(nameof(Zoom));
+            }
+        }
+
+
+        public double ZoomMax
+        {
+            get { return _zoomMax; }
+            set 
+            { 
+                _zoomMax = value;
+                NotifyOfPropertyChange(nameof(ZoomMax));
+            }
+        }
+
+
+        public double ZoomMin
+        {
+            get { return _zoomMin; }
+            set 
+            { 
+                _zoomMin = value;
+                NotifyOfPropertyChange(nameof(ZoomMin));
+            }
+        }
+
+
+        #endregion
+        #region - Attributes -
+        private double _zoomMax;
+        private double _zoomMin;
+
 
         PointLatLng start;
         PointLatLng end;
@@ -179,21 +227,6 @@ namespace WPF.GIS.Example.ViewModels.Maps
 
         // zones list
         List<GMapMarker> Circles = new List<GMapMarker>();
-
-
-        //protected void SetProperty<T>(ref T oldValue, ref T newValue,
-        //[CallerMemberName] string propertyName = null)
-        //{
-        //    PropertyChangedEventHandler handler = PropertyChanged;
-        //    if (handler != null)
-        //    {
-        //        oldValue = newValue;
-        //        handler(this, new PropertyChangedEventArgs(propertyName));
-        //    }
-        //}
-        #endregion
-        #region - Attributes -
-        //public event PropertyChangedEventHandler PropertyChanged;
         #endregion
     }
 }
