@@ -5,6 +5,7 @@
 
 <br>
 <br>
+
 #### GIS 시스템이 필요한 Requirement  
 
    1. 지정된 위치에 Map을 로드 할 수 있어야 한다. 또한, 오프라인 환경에서 제공할 수 있어야 한다.  
@@ -21,7 +22,7 @@
 <br>
 <br>
 
-### Update Date: 2023/02/24  
+#### Update Date: 2023/02/24  
 
 * Version : -  
 
@@ -49,7 +50,8 @@
     </packages>
     ```  
 <hr>
-### Update Date: 2023/02/27  
+
+#### Update Date: 2023/02/27  
 
 * Version : v1.0.0  
 
@@ -68,7 +70,8 @@
          b) 
 
 <hr>
-### Update Date: 2023/02/28  
+
+#### Update Date: 2023/02/28  
 
 * Version : v1.0.0  
 
@@ -83,8 +86,9 @@
       2) GMapControl을 자체 CustomControl로 변경하여 작업을 하고자 하였으나, 기존에 구성하고 있던 FrameworkElement의 필수 구성요소가 충족되지 않아 만들지 못했다.  
       3) CustomControl에 GMapControl만 Wrapping하려고 하였으나 지도가 나타나지 않는 문제가 발행하였다.  
     
+<hr>
 
-### Update Date: 2023/03/02  
+#### Update Date: 2023/03/02  
 
 * Version : v1.0.0  
 
