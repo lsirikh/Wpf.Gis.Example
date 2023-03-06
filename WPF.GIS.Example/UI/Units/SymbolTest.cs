@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GMap.NET;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -93,6 +94,22 @@ namespace WPF.GIS.Example.UI.Units
             Debug.WriteLine($"RectWidthCallback : {width}");
             return width > 0;
         }
+
+        public PointLatLng Center;
+        public PointLatLng Bound;
+
+
+        //public PointLatLng Center   
+        //{
+        //    get { return (PointLatLng)GetValue(CenterProperty); }
+        //    set { SetValue(CenterProperty, value); }
+        //}
+
+        //// Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty CenterProperty =
+        //    DependencyProperty.Register("MyProperty", typeof(PointLatLng), typeof(SymbolTest), new PropertyMetadata(0));
+
+
 
 
 
