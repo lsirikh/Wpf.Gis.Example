@@ -5,12 +5,34 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF.GIS.Example.UserControls"
 			 xmlns:map="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
-			 
+			 xmlns:ctrl="clr-namespace:WPF.GIS.Example.Controls"
+			 xmlns:view="clr-namespace:WPF.GIS.Example.UI.Views"
              mc:Ignorable="d" 
+			 d:DataContext="{d:DesignInstance Type=ctrl:MapControl, IsDesignTimeCreatable=True}"
              d:DesignHeight="450" d:DesignWidth="800">
-	
 
+	<!--<map:GMapControl x:Name="MainMap" />-->
+	<!--<ctrl:MapControl x:Name="MainMap" />-->
+	<!--<ItemsControl Name="figures" >
+		<ItemsControl.ItemTemplate>
+			<DataTemplate>
+				<ContentPresenter Content="{Binding Path=Shape}" />
+			</DataTemplate>
+		</ItemsControl.ItemTemplate>
+		<ItemsControl.ItemsPanel>
+			<ItemsPanelTemplate>
+				<Canvas IsItemsHost="True" />
+			</ItemsPanelTemplate>
+		</ItemsControl.ItemsPanel>
+		<ItemsControl.ItemContainerStyle>
+			<Style>
+				<Setter Property="Canvas.Left" Value="{Binding Path=LocalPositionX}"/>
+				<Setter Property="Canvas.Top" Value="{Binding Path=LocalPositionY}"/>
+			</Style>
+		</ItemsControl.ItemContainerStyle>
+	</ItemsControl>-->
 	<Grid>
-			<map:GMapControl x:Name="MainMap" />
+		<!--<view:GMapBaseCanvas DataContext="{Binding }"/>-->
+		<ctrl:MapControl DataContext="{Binding }"/>
 	</Grid>
 </UserControl>
