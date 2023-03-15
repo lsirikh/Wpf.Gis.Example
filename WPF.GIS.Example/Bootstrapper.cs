@@ -14,6 +14,7 @@ using System.Windows;
 using WPF.GIS.Example.ViewModels;
 using Autofac;
 using WPF.GIS.Example.ViewModels.Maps;
+using GMap.NET.WindowsPresentation;
 
 namespace WPF.GIS.Example
 {
@@ -55,8 +56,10 @@ namespace WPF.GIS.Example
             try
             {
                 base.ConfigureContainer(builder);
-
                 builder.RegisterType<MapViewModel>().SingleInstance();
+
+                var mapControl = new GMapControl();
+                builder.RegisterInstance(mapControl).AsSelf().SingleInstance();
 
             }
             catch (Exception ex)

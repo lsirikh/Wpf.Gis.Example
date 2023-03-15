@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,20 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPF.GIS.Example.Views
+namespace WPF.GIS.Example.Views.CustomMarkers
 {
     /// <summary>
-    /// Interaction logic for ShellView.xaml
+    /// Interaction logic for SymbolPolyLine.xaml
     /// </summary>
-    public partial class ShellView : Window
+    public partial class SymbolLineView : UserControl
     {
-        public ShellView()
+        public SymbolLineView()
         {
             InitializeComponent();
         }
-
-        
     }
 }

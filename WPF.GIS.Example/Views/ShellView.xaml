@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.GIS.Example.Views"
         mc:Ignorable="d"
+		xmlns:cal="http://caliburnmicro.com"
         Title="ShellView" Height="450" Width="800">
-    <Grid>
+	<cal:Message.Attach>
+		[Event Closing] = [Action OnClose($eventArgs)]
+	</cal:Message.Attach>
+	<Grid>
 		<ContentControl x:Name="MapViewModel"/>
 	</Grid>
 </Window>
