@@ -98,3 +98,20 @@
       2) Caliburn.Micro Mvvm Framework 적용하였다.  
       3) Ironwall 개발 Framework 적용하였다.  
       4) MapViewModel로 ContentControl 적용을 통한 MVVM 구현하였다.  
+
+<hr>
+
+#### Update Date: 2023/03/03  
+
+* Version : v1.0.0  
+
+* 개발 내역  
+
+      1) 저장된 GoogleHybridMap을 기반으로 Load 하는 기능을 구현하였다.  
+      2) 특정영역을 벗어나지 않도록 Boundary 기능을 구현하였다.  
+      3) Boundary 영역에 Region Marker 를 이용하여 구획을 GUI 표현 하였다.  
+      4) 구획된 영역이 지도의 ZOOM UP & ZOOM DOWN에 따라 Syncronized 동작을 인하였다.  
+      5) SetBoundary & ClearBoundary 기능을 구현하였다.  
+      6) SetHomePosition & ClearHomePosition 기능을 구현하였다.  
+      7) GoToHomePosition 기능은 추후의 북마크된 지역 이동으로 활용 가능하다.  
+

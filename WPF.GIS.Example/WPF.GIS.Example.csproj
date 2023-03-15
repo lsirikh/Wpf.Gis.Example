@@ -139,6 +139,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="CustomMarkers\CustomMarkerDemo.xaml.cs">
+      <DependentUpon>CustomMarkerDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomMarkers\CustomMarkerRed.xaml.cs">
+      <DependentUpon>CustomMarkerRed.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HomePositionModel.cs" />
     <Compile Include="UserControls\GMapUserControl.xaml.cs">
       <DependentUpon>GMapUserControl.xaml</DependentUpon>
     </Compile>
@@ -164,6 +171,14 @@
     <Compile Include="CustomMarkers\Circle.xaml.cs">
       <DependentUpon>Circle.xaml</DependentUpon>
     </Compile>
+    <Page Include="CustomMarkers\CustomMarkerDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomMarkers\CustomMarkerRed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -221,17 +236,18 @@
     <Resource Include="Resources\zoom-.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\GMap.NET\GMap.NET\GMap.NET.Core\GMap.NET.Core.csproj">
-      <Project>{59d718a1-78d8-4d16-b802-b721fd40ec46}</Project>
+    <ProjectReference Include="..\..\Forks\GMap.NET\GMap.NET\GMap.NET.Core\GMap.NET.Core.csproj">
+      <Project>{2b47db3a-d722-458b-b908-a43dbf1a3ebe}</Project>
       <Name>GMap.NET.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\GMap.NET\GMap.NET\GMap.NET.WindowsPresentation\GMap.NET.WindowsPresentation.csproj">
-      <Project>{defaf2c5-cbda-48f3-9201-8bca74478419}</Project>
+    <ProjectReference Include="..\..\Forks\GMap.NET\GMap.NET\GMap.NET.WindowsPresentation\GMap.NET.WindowsPresentation.csproj">
+      <Project>{1b38dd16-7f7f-4d78-b9ce-3bc0beb30894}</Project>
       <Name>GMap.NET.WindowsPresentation</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Resource Include="CustomMarkers\bigMarkerGreen.png" />
+    <Resource Include="CustomMarkers\red-dot.png" />
     <Content Include="Exts\Ironwall.Framework.dll" />
     <Content Include="Exts\Ironwall.Libraries.Enums.dll" />
     <Content Include="Exts\Ironwall.Libraries.Utils.dll" />

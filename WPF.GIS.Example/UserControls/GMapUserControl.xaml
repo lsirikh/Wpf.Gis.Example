@@ -5,95 +5,34 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF.GIS.Example.UserControls"
 			 xmlns:map="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+			 xmlns:ctrl="clr-namespace:WPF.GIS.Example.Controls"
+			 xmlns:view="clr-namespace:WPF.GIS.Example.UI.Views"
              mc:Ignorable="d" 
+			 d:DataContext="{d:DesignInstance Type=ctrl:MapControl, IsDesignTimeCreatable=True}"
              d:DesignHeight="450" d:DesignWidth="800">
-	<UserControl.Resources>
-		<Style x:Key="ZoomUpButton" TargetType="Button">
-			<Setter Property="Width" Value="23.5" />
-			<Setter Property="Height" Value="25.5" />
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="Button">
-						<Grid Width="23.5" Height="25.5">
-							<Image Source="/WPF.GIS.Example;component/Resources/zoom+.png" Stretch="Fill" />
-							<ContentPresenter HorizontalAlignment="Center" />
-						</Grid>
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsMouseOver" Value="True">
-								<Setter Property="Effect">
-									<Setter.Value>
-										<DropShadowEffect ShadowDepth="2" />
-									</Setter.Value>
-								</Setter>
-							</Trigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-		<Style x:Key="ZoomDownButton" TargetType="Button">
-			<Setter Property="Width" Value="23.5" />
-			<Setter Property="Height" Value="25.5" />
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="Button">
-						<Grid Width="23.5" Height="25.5">
-							<Image Source="/WPF.GIS.Example;component/Resources/zoom-.png" Stretch="Fill" />
-							<ContentPresenter HorizontalAlignment="Center" />
-						</Grid>
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsMouseOver" Value="True">
-								<Setter Property="Effect">
-									<Setter.Value>
-										<DropShadowEffect ShadowDepth="2" />
-									</Setter.Value>
-								</Setter>
-							</Trigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
 
-		<Style TargetType="{x:Type GroupBox}">
-			<Setter Property="Background" Value="Gray"/>
-			<Setter Property="Margin" Value="5"/>
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type GroupBox}">
-						<Border Background="{TemplateBinding Background}"
-								CornerRadius="5"
-								Padding="5"
-								BorderThickness="2">
-							<Grid>
-								<ContentPresenter />
-							</Grid>
-						</Border>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-	</UserControl.Resources>
-
+	<!--<map:GMapControl x:Name="MainMap" />-->
+	<!--<ctrl:MapControl x:Name="MainMap" />-->
+	<!--<ItemsControl Name="figures" >
+		<ItemsControl.ItemTemplate>
+			<DataTemplate>
+				<ContentPresenter Content="{Binding Path=Shape}" />
+			</DataTemplate>
+		</ItemsControl.ItemTemplate>
+		<ItemsControl.ItemsPanel>
+			<ItemsPanelTemplate>
+				<Canvas IsItemsHost="True" />
+			</ItemsPanelTemplate>
+		</ItemsControl.ItemsPanel>
+		<ItemsControl.ItemContainerStyle>
+			<Style>
+				<Setter Property="Canvas.Left" Value="{Binding Path=LocalPositionX}"/>
+				<Setter Property="Canvas.Top" Value="{Binding Path=LocalPositionY}"/>
+			</Style>
+		</ItemsControl.ItemContainerStyle>
+	</ItemsControl>-->
 	<Grid>
-		<GroupBox 
-			Header="Maps"
-			Name="mapgroup" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-			<map:GMapControl x:Name="MainMap" Zoom="13" MaxZoom="24" MinZoom="1" />
-
-		</GroupBox>
-		<GroupBox 
-			Header="Zoom"
-			HorizontalAlignment="Right" VerticalAlignment="Stretch" >
-			<Grid>
-				<Button x:Name="CzuZoomUp" Style="{StaticResource ZoomUpButton}" HorizontalAlignment="Center"
-                        VerticalAlignment="Top" Width="23.5" Height="25.5" />
-				<Slider Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Stretch" Maximum="17"
-                        Minimum="12" Value="{Binding ElementName=MainMap, Path=Zoom}" TickPlacement="Both"
-                        Margin="0,35,0,35" SmallChange="1" x:Name="SliderZoom"  />
-				<Button Style="{StaticResource ZoomDownButton}" x:Name="CzuZoomDown" HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom" Width="23" Height="25"  />
-			</Grid>
-		</GroupBox>
+		<!--<view:GMapBaseCanvas DataContext="{Binding }"/>-->
+		<ctrl:MapControl DataContext="{Binding }"/>
 	</Grid>
 </UserControl>
