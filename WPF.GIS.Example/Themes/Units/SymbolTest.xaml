@@ -9,24 +9,20 @@
 								Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" 
 								From="{Binding WholeAngle}" To="180" BeginTime="00:00:01.000" Duration="00:00:05.000" AutoReverse="True" />
 	</Storyboard>-->
-	
+
 	<Style TargetType="{x:Type units:SymbolTest}">
-		
+
 		<Setter Property="VerticalAlignment" Value="Center"/>
 		<Setter Property="HorizontalAlignment" Value="Center"/>
 		<Setter Property="BorderThickness" Value="0"/>
-		<Setter Property="BorderBrush" Value="Transparent"/>
+		<Setter Property="BorderBrush" Value="Red"/>
 		<Setter Property="Background" Value="Transparent"/>
-		<Setter Property="BodySize" Value="20"/>
-		<Setter Property="WholeSize" Value="60"/>
-		<Setter Property="WholeAngle" Value="0.0"/>
-		<Setter Property="SymbolTitle" Value=""/>
-		<Setter Property="IsAnimated" Value="False"/>
+		<Setter Property="Margin" Value="0"/>
+		<Setter Property="Padding" Value="5"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type units:SymbolTest}">
-					<StackPanel Orientation="Vertical">
-						<Border Background="{TemplateBinding Background}"
+					<Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
 							HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
 							VerticalAlignment="{TemplateBinding VerticalAlignment}"
@@ -34,126 +30,120 @@
 							Height="{TemplateBinding WholeSize}"
                             BorderThickness="{TemplateBinding BorderThickness}"
 							x:Name="PART_whole">
-							<!--<Border.Style>
-								<Style TargetType="Border">
-									<Style.Triggers>
-										<DataTrigger Binding="{Binding IsAnimated, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
-											<DataTrigger.EnterActions>
-												<BeginStoryboard>
-													<Storyboard>
-														<DoubleAnimation 
-															 Storyboard.TargetProperty="(Border.RenderTransform).(RotateTransform.Angle)" 
-															 From="{Binding WholeAngle, RelativeSource={RelativeSource TemplatedParent}}" 
-															 To="180" 
-															 AccelerationRatio="0.5"
-															 SpeedRatio="1.5"
-															 DecelerationRatio="0.5"
-															 BeginTime="00:00:01.000" 
-															 Duration="00:00:03.000" 
-															 RepeatBehavior="Forever"
-															 AutoReverse="True" />
-													</Storyboard>
-												</BeginStoryboard>
-											</DataTrigger.EnterActions>
-										</DataTrigger>
-									</Style.Triggers>
-								</Style>
-							</Border.Style>-->
-							
-							<Border.RenderTransformOrigin>
-								<Point X="0.5" Y="0.5"/>
-							</Border.RenderTransformOrigin>
-							<Border.RenderTransform>
-								<RotateTransform 
+						<Border.RenderTransformOrigin>
+							<Point X="0.5" Y="0.5"/>
+						</Border.RenderTransformOrigin>
+						<Border.RenderTransform>
+							<RotateTransform 
 									x:Name="PART_rotateBody"
 									Angle="{Binding WholeAngle, RelativeSource={RelativeSource TemplatedParent}}" CenterX="0" CenterY="0"/>
-							</Border.RenderTransform>
-							<Grid>
-								
-								<Rectangle x:Name="PART_body" 
-										   Fill="Red"
-										   Stroke="White"
-										   StrokeThickness="1" 
-										   VerticalAlignment="Center"  
-										   HorizontalAlignment="Center" 
-										   Width="{TemplateBinding BodySize}" 
-										   Height="25" 
-										   Margin="5"
-										   />
+						</Border.RenderTransform>
+						<Border.ToolTip>
+							<Border Background="White"
+										BorderBrush="Black"
+										BorderThickness="1">
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="3*"/>
+										<ColumnDefinition Width="1*"/>
+									</Grid.ColumnDefinitions>
+									<TextBlock x:Name="PART_titleName"
+												   Grid.Column="0"
+												   Text="{Binding SymbolTitle, RelativeSource={RelativeSource TemplatedParent}}"
+												   FontWeight="Bold"
+												   HorizontalAlignment="Center"
+												   Foreground="Red"
+												   FontSize="15"/>
+									<TextBlock x:Name="PART_symbolZoom"
+												   Grid.Column="1"
+												   Text="{Binding SymbolZoom, RelativeSource={RelativeSource TemplatedParent}}"
+												   FontWeight="Bold"
+												   HorizontalAlignment="Center"
+												   Foreground="Red"
+												   FontSize="15"/>
+								</Grid>
+							</Border>
+						</Border.ToolTip>
+						<Grid>
+							<Viewbox >
+								<Grid>
+									<Rectangle x:Name="PART_body" 
+												   Fill="Red"
+												   Stroke="White"
+												   StrokeThickness="1" 
+												   VerticalAlignment="Center"  
+												   HorizontalAlignment="Center"
+												   Width="20"
+												   Height="20"
+												   Margin="5"
+												   />
 
-								<Rectangle x:Name="PART_barTip"
-										   Fill="Red"
-										   Stroke="White"
-										   StrokeThickness="1"
-										   Width="15"
-										   Height="8"
-										   RadiusY="3"
-										   RadiusX="3"
-										   Margin="0 0 0 50"
-										   />
+									<Rectangle x:Name="PART_barTip"
+												   Fill="Red"
+												   Stroke="White"
+												   StrokeThickness="1"
+												   Width="15"
+												   Height="8"
+												   RadiusY="3"
+												   RadiusX="3"
+												   Margin="0 0 0 40"
+												   />
 
-								<Rectangle x:Name="PART_bar"
-										   Fill="Red"
-										   Stroke="White"
-										   StrokeThickness="1"
-										   Width="10"
-										   Height="25"
-										   Margin="0 0 0 20"
-										   />
+									<Rectangle x:Name="PART_bar"
+												   Fill="Red"
+												   Stroke="White"
+												   StrokeThickness="1"
+												   Width="10"
+												   Height="20"
+												   Margin="0 0 0 15"
+												   />
 
-								<Ellipse x:Name="PART_bodyTop"
-										 Fill="Red"
-										 Stroke="White"
-										 StrokeThickness="1"
-										 Width="18"
-										 Height="18"/>
+									<Ellipse x:Name="PART_bodyTop"
+											 VerticalAlignment="Center"
+												HorizontalAlignment="Center"
+												Fill="Red"
+												Stroke="White"
+												StrokeThickness="1"
+												Width="18"
+												Height="18"/>
 
-								<Rectangle x:Name="PART_leftWheel"
-										   Fill="Brown"
-										   Stroke="White"
-										   StrokeThickness="1" 
-										   Width="10"
-										   Height="25"
-										   RadiusY="3"
-										   RadiusX="3"
-										   Margin="0 0 30 0"
-										   />
-								<Rectangle x:Name="PART_rightWheel"
-										   Fill="Brown"
-										   Stroke="White"
-										   StrokeThickness="1" 
-										   Width="10"
-										   Height="25"
-										   RadiusY="3"
-										   RadiusX="3"
-										   Margin="30 0 0 0"
-										   />
-								<Polygon VerticalAlignment="Center"
-										 HorizontalAlignment="Center"
-										 Name="polygon" 
-										 Width="12"
-										 Height="12"
-										 Stroke="Black"
-										 StrokeThickness="1"
-										 StrokeLineJoin="Round"
-										 Fill="Yellow"
-										 Stretch="Fill"
-										 Points="9 2 11 7 17 7 12 10 14 15 9 12 4 15 6 10 1 7 7 7"
-										 Visibility="Visible">
-								</Polygon>
-							</Grid>
-						</Border>
-						<Border Background="White"
-								BorderBrush="Black"
-								BorderThickness="1">
-							<TextBlock x:Name="PART_title"
-									   Text="{Binding SymbolTitle, RelativeSource={RelativeSource TemplatedParent}}"
-									   FontWeight="Bold"
-									   HorizontalAlignment="Center"
-									   Foreground="Red"
-									   FontSize="15"/>
-						</Border>
-					</StackPanel>
+									<Rectangle x:Name="PART_leftWheel"
+												   Fill="Brown"
+												   Stroke="White"
+												   StrokeThickness="1" 
+												   Width="10"
+												   Height="25"
+												   RadiusY="3"
+												   RadiusX="3"
+												   Margin="0 0 30 0"
+												   />
+									<Rectangle x:Name="PART_rightWheel"
+												   Fill="Brown"
+												   Stroke="White"
+												   StrokeThickness="1" 
+												   Width="10"
+												   Height="25"
+												   RadiusY="3"
+												   RadiusX="3"
+												   Margin="30 0 0 0"
+												   />
+									<Polygon VerticalAlignment="Center"
+												 HorizontalAlignment="Center"
+												 Name="PART_starshape" 
+												 Width="12"
+												 Height="12"
+												 Stroke="Black"
+												 StrokeThickness="1"
+												 StrokeLineJoin="Round"
+												 Fill="Yellow"
+												 Stretch="Fill"
+												 Points="9 2 11 7 17 7 12 10 14 15 9 12 4 15 6 10 1 7 7 7"
+												 Visibility="Visible">
+									</Polygon>
+								</Grid>
+							</Viewbox>
+						</Grid>
+					</Border>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>

@@ -1,12 +1,15 @@
 ﻿using Caliburn.Micro;
+using Ironwall.Framework.Services;
 using Ironwall.Framework.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using WPF.GIS.Example.ViewModels.Maps;
 
 namespace WPF.GIS.Example.ViewModels
@@ -37,9 +40,11 @@ namespace WPF.GIS.Example.ViewModels
     {
             await MapViewModel.DeactivateAsync(true);
     }
+
+    
     #endregion
     #region - Binding Methods -
-    public async void OnClosing(object sender, CancelEventArgs e)
+    public async void OnClose(CancelEventArgs e)
     {
         e.Cancel = true;
 
@@ -48,7 +53,7 @@ namespace WPF.GIS.Example.ViewModels
 
         _isCallExit = true;
 
-
+        
 
         await Task.Delay(1000);
         App.Current.Shutdown();

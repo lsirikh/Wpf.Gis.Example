@@ -18,7 +18,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
+using WPF.GIS.Example.Controls;
 using WPF.GIS.Example.CustomMarkers;
+using WPF.GIS.Example.Enums;
 using WPF.GIS.Example.Models;
 using WPF.GIS.Example.UI.Units;
 using WPF.GIS.Example.UI.Views;
@@ -46,7 +50,20 @@ namespace WPF.GIS.Example.ViewModels.Maps
             ClassCategory = CategoryEnum.PANEL_SHELL_VM_ITEM;
             #endregion - Settings -
 
-            MainMap = new GMapControl();
+            /* Scale
+             * Zoom : 17, Scale : 50m, Length : 1.5 cm
+             * Zoom : 16, Scale : 100m, Length : 1.5 cm
+             * Zoom : 15, Scale : 300m, Length : 2.5 cm
+             * Zoom : 14, Scale : 500m, Length : 2 cm 
+             * Zoom : 13, Scale : 1000m, Length : 2 cm
+             * 
+             * Zoom : 12, Scale : 3000m, Length : 2.2 cm
+             * Zoom : 11, Scale : 5000m, Length : 2.2 cm
+             * Zoom : 10, Scale : 10Km, Length : 2.2 cm
+             
+             */
+
+            MainMap = new MapControl();
         }
         #endregion
         #region - Implementation of Interface -
@@ -61,13 +78,14 @@ namespace WPF.GIS.Example.ViewModels.Maps
             //Get Locally Saved gmdb file
            
 
-            MainMap.Manager.Mode = AccessMode.CacheOnly;
-            //MainMap.Manager.Mode = AccessMode.ServerOnly;
+            //MainMap.Manager.Mode = AccessMode.CacheOnly;
+            MainMap.Manager.Mode = AccessMode.ServerOnly;
 
             // config map
             MapConfigure();
             
-            await GetMapData(MainMap);
+            if(MainMap.Manager.Mode == AccessMode.CacheOnly)
+                await GetMapData(MainMap);
 
 
                 
@@ -165,6 +183,8 @@ namespace WPF.GIS.Example.ViewModels.Maps
                 MainMap.MouseEnter += MainMap_MouseEnter;
                 MainMap.OnMapZoomChanged += MainMap_OnMapZoomChanged;
 
+                MainMap.ShowCenter = true;
+                MainMap_OnMapZoomChanged();
 
                 _homePosition = new HomePositionModel();
 
@@ -233,11 +253,11 @@ namespace WPF.GIS.Example.ViewModels.Maps
         #region - Binding Methods -
         public void OnClickZoomUp(object sender, EventArgs args)
         {
-            MainMap.Zoom = (int)MainMap.Zoom + 1;
+            Zoom = (int)MainMap.Zoom + 1;
         }
         public void OnClickZoomDown(object sender, EventArgs args)
         {
-            MainMap.Zoom = (int)(MainMap.Zoom + 0.99) - 1;
+            Zoom = (int)(MainMap.Zoom + 0.99) - 1;
         }
         #endregion
         #region - Processes -
@@ -251,7 +271,7 @@ namespace WPF.GIS.Example.ViewModels.Maps
                 var num = random.Next(1, 100);
                 var title = $"{num}부대";
                 var isAnimated = random.NextDouble() * 10 > 5 ? true : false;
-                var symbole = new SymbolTest() { WholeAngle = angle, SymbolTitle = title, IsAnimated = isAnimated };
+                var symbole = new SymbolTest(angle, title, MainMap.Zoom, isAnimated);
                 Symbols.Add(symbole);
                 PointLatLng point = MainMap.FromLocalToLatLng((int)(clickPoint.X - (symbole.WholeSize / 2)), (int)(clickPoint.Y - (symbole.WholeSize / 2)));
                 symbole.Center = point;
@@ -319,16 +339,38 @@ namespace WPF.GIS.Example.ViewModels.Maps
         }
 
         // zoom up
-        private void czuZoomUp_Click(object sender, RoutedEventArgs e)
+        public void OnClickCountClockWise(object sender, EventArgs e)
         {
-            MainMap.Zoom = (int)MainMap.Zoom + 1;
+            float angle = 10;
+            UpdateAngle(angle);
+            
         }
 
-        // zoom down
-        private void czuZoomDown_Click(object sender, RoutedEventArgs e)
+        public void OnClickClockWise(object sender, EventArgs e)
         {
-            MainMap.Zoom = (int)(MainMap.Zoom + 0.99) - 1;
+            float angle = -10;
+            UpdateAngle(angle);
         }
+
+        private void UpdateAngle(float angle)
+        {
+            try
+            {
+                MainMap.Bearing += angle;
+
+                foreach (var item in MainMap.Markers)
+                {
+                    if (item.Shape is SymbolTest symbol)
+                        symbol.WholeAngle += (-angle);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
 
         // calculates circle radius
         void UpdateCircle(Circle c)
@@ -349,21 +391,83 @@ namespace WPF.GIS.Example.ViewModels.Maps
         {
             Debug.WriteLine($"Zoom : {MainMap.Zoom}");
             //UpdateSymbol();
+            Zoom = MainMap.Zoom;
+
             var area = MainMap.ViewArea;
             Debug.WriteLine($"Area : { area}");
+
+            double scaleX = 0.0;
+            var scale = "";
+            
+            
+
+            switch (Zoom)
+            {
+                case 10:
+                    scaleX = 83.1;
+                    scale = "10Km";
+                    break;
+                case 11:
+                    scaleX = 83.1;
+                    scale = "5Km";
+                    break;
+                case 12:
+                    scaleX = 83.1;
+                    scale = "3Km";
+                    break;
+                case 13:
+                    scaleX = 75.59;
+                    scale = "1Km";
+                    break;
+                case 14:
+                    scaleX = 75.59;
+                    scale = "500m";
+                    break;
+                case 15:
+                    scaleX = 94.5;
+                    scale = "300m";
+                    break;
+                case 16:
+                    scaleX = 56.7;
+                    scale = "100m";
+                    break;
+                case 17:
+                    scaleX = 56.7;
+                    scale = "50m";
+                    break;
+                case 18:
+                    scaleX = 56.7;
+                    scale = "30m";
+                    break;
+
+                default:
+                    break;
+            }
+
+            Scale = scale;
+            ScalePoints = new PointCollection()
+            {
+                new Point(0.0, 0.0),
+                new Point(0.0, 5.0),
+                new Point(scaleX, 5.0),
+                new Point(scaleX, 0.0),
+
+            };
+            NotifyOfPropertyChange(() => ScalePoints);
         }
 
         public void SetBoundary()
         {
             MainMap.BoundsOfMap = MainMap.ViewArea;
-            MainMap.MaxZoom = (int)(MainMap.Zoom + 0.99);
-
+            MainMap.MinZoom = (int)(MainMap.Zoom + 0.99);
+            ZoomMin = MainMap.MinZoom;
         }
         public void ClearBoundary()
         {
             MainMap.BoundsOfMap = null;
-            MainMap.MaxZoom = ZOOM_MAX;
-
+            MainMap.MinZoom = ZOOM_MIN;
+            ZoomMin = MainMap.MinZoom;
+            MainMap.InvalidateVisual(true);
         }
 
         public void SetHomePosition()
@@ -371,7 +475,7 @@ namespace WPF.GIS.Example.ViewModels.Maps
             if (HomePosition.IsAvailable)
                 return;
 
-            HomePosition.Position = MainMap.CenterPosition;
+            HomePosition.Position = MainMap.Position;
             HomePosition.Zoom = Zoom;
             HomePosition.IsAvailable = true;
         }
@@ -388,11 +492,16 @@ namespace WPF.GIS.Example.ViewModels.Maps
             MainMap.Position = HomePosition.Position;
             MainMap.Zoom = HomePosition.Zoom;
         }
+        public void AddTank()
+        {
+            MarkerMode = MarkerIconEnum.TANK;
+
+        }
         #endregion
         #region - IHanldes -
         #endregion
         #region - Properties -
-        public GMapControl MainMap { get; set; }
+        public MapControl MainMap { get; set; }
 
         public double Zoom
         {
@@ -415,7 +524,6 @@ namespace WPF.GIS.Example.ViewModels.Maps
             }
         }
 
-
         public double ZoomMin
         {
             get { return _zoomMin; }
@@ -427,7 +535,6 @@ namespace WPF.GIS.Example.ViewModels.Maps
         }
 
         public ObservableCollection<SymbolTest> Symbols { get; set; }
-
 
         public PointLatLng CurrentPosition
         {
@@ -450,7 +557,23 @@ namespace WPF.GIS.Example.ViewModels.Maps
             }
         }
 
+        private string _scale;
 
+        public string Scale
+        {
+            get { return _scale; }
+            set 
+            { 
+                _scale = value;
+                NotifyOfPropertyChange(nameof(Scale));
+            }
+        }
+
+
+        public PointCollection ScalePoints { get; set; }
+
+
+        public MarkerIconEnum MarkerMode { get; set; }
         #endregion
         #region - Attributes -
         private double _zoomMax;

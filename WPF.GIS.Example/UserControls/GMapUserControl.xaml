@@ -10,9 +10,7 @@
              mc:Ignorable="d" 
 			 d:DataContext="{d:DesignInstance Type=ctrl:MapControl, IsDesignTimeCreatable=True}"
              d:DesignHeight="450" d:DesignWidth="800">
-
-	<!--<map:GMapControl x:Name="MainMap" />-->
-	<!--<ctrl:MapControl x:Name="MainMap" />-->
+<ctrl:MapControl x:Name="MainMap" />
 	<!--<ItemsControl Name="figures" >
 		<ItemsControl.ItemTemplate>
 			<DataTemplate>
@@ -31,8 +29,4 @@
 			</Style>
 		</ItemsControl.ItemContainerStyle>
 	</ItemsControl>-->
-	<Grid>
-		<!--<view:GMapBaseCanvas DataContext="{Binding }"/>-->
-		<ctrl:MapControl DataContext="{Binding }"/>
-	</Grid>
 </UserControl>
