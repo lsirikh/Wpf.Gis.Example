@@ -120,7 +120,7 @@
 
 #### Update Date: 2023/03/15  
 
-* Version : v1.0.0(정식)  
+* Version : v1.0.1 
 
 * 개발 내역  
 
