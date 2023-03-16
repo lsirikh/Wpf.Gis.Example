@@ -8,10 +8,13 @@
 			 xmlns:ctrl="clr-namespace:WPF.GIS.Example.Controls"
 			 xmlns:view="clr-namespace:WPF.GIS.Example.UI.Views"
              mc:Ignorable="d" 
+			 Visibility="Visible"
 			 d:DataContext="{d:DesignInstance Type=ctrl:MapControl, IsDesignTimeCreatable=True}"
              d:DesignHeight="450" d:DesignWidth="800">
-<ctrl:MapControl x:Name="MainMap" />
-	<!--<ItemsControl Name="figures" >
+	
+	<ctrl:MapControl x:Name="MainMap" />
+	<!--
+	<ItemsControl Name="figures" >
 		<ItemsControl.ItemTemplate>
 			<DataTemplate>
 				<ContentPresenter Content="{Binding Path=Shape}" />
@@ -28,5 +31,6 @@
 				<Setter Property="Canvas.Top" Value="{Binding Path=LocalPositionY}"/>
 			</Style>
 		</ItemsControl.ItemContainerStyle>
-	</ItemsControl>-->
+	</ItemsControl>
+	-->
 </UserControl>

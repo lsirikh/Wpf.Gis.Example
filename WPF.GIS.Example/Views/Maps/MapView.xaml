@@ -12,7 +12,6 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
 	<UserControl.Resources>
-
 		<Style x:Name="CustomIconButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignIconButton}">
 			<Setter Property="Padding" Value="0"/>
 			<Setter Property="VerticalAlignment" Value="Center"/>
@@ -95,6 +94,12 @@
 			<ToolBar Style="{StaticResource MaterialDesignToolBar}"
 						 ClipToBounds="False">
 
+				<Button x:Name="SetPoint"
+							ToolTip="Set Current Location"
+							Content="{md:PackIcon Kind=Location}" />
+				<Button x:Name="ClearPoint"
+							ToolTip="Clear Current Location"
+							Content="{md:PackIcon Kind=LocationOff}" />
 				<Button x:Name="SetBoundary"
 							ToolTip="Set Boundary Area"
 							Content="{md:PackIcon Kind=CircleBoxOutline}" />
@@ -133,7 +138,6 @@
 										  x:Name="MapView_GMapUserControl"
 										  Content="{Binding MainMap}" />-->
 		<userControl:GMapUserControl  Grid.Row="2"
-						  x:Name="MainMap" 
 						  Content="{Binding MainMap}"/>
 
 		<!--<Canvas Visibility="Collapsed" Background="Transparent" />-->

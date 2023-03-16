@@ -36,32 +36,11 @@ namespace WPF.GIS.Example.ViewModels.Maps
         #region - Ctors -
         public MapViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
-            //GoogleMapProvider.Instance.ApiKey = "AIzaSyCXJrDpszuNQfMEXKIifx5zYzhSq3Irpyg";
-            //_gMapControl = new MapBase();
-            ////MapProvider = GMapProviders.GoogleHybridMap;
-            ////Position = new PointLatLng(37.648425, 126.904284);
-            ////GMapProviders mapProvider = new GMapProviders();
-            //_gMapControl.MapProvider = GMapProviders.GoogleHybridMap;
-            //_gMapControl.Position = new PointLatLng(37.648425, 126.904284);
-
             #region - Settings -
             ClassId = 1;
             ClassContent = "";
             ClassCategory = CategoryEnum.PANEL_SHELL_VM_ITEM;
             #endregion - Settings -
-
-            /* Scale
-             * Zoom : 17, Scale : 50m, Length : 1.5 cm
-             * Zoom : 16, Scale : 100m, Length : 1.5 cm
-             * Zoom : 15, Scale : 300m, Length : 2.5 cm
-             * Zoom : 14, Scale : 500m, Length : 2 cm 
-             * Zoom : 13, Scale : 1000m, Length : 2 cm
-             * 
-             * Zoom : 12, Scale : 3000m, Length : 2.2 cm
-             * Zoom : 11, Scale : 5000m, Length : 2.2 cm
-             * Zoom : 10, Scale : 10Km, Length : 2.2 cm
-             
-             */
 
             MainMap = new MapControl();
         }
@@ -76,7 +55,6 @@ namespace WPF.GIS.Example.ViewModels.Maps
             GoogleMapProvider.Instance.ApiKey = "AIzaSyCXJrDpszuNQfMEXKIifx5zYzhSq3Irpyg";
 
             //Get Locally Saved gmdb file
-           
 
             //MainMap.Manager.Mode = AccessMode.CacheOnly;
             MainMap.Manager.Mode = AccessMode.ServerOnly;
@@ -87,21 +65,7 @@ namespace WPF.GIS.Example.ViewModels.Maps
             if(MainMap.Manager.Mode == AccessMode.CacheOnly)
                 await GetMapData(MainMap);
 
-
-                
-
-
-
-            currentMarker = new GMapMarker(MainMap.Position);
-            {
-                currentMarker.Shape = new CustomMarkerRed(MainMap, currentMarker, "custom position marker");
-                currentMarker.Offset = new Point(-15, -15);
-                currentMarker.ZIndex = int.MaxValue;
-                MainMap.Markers.Add(currentMarker);
-            }
-           
-
-
+            #region GeoCoderStatusCode
             //if(false)
             //{
             //    // add my city location for demo
@@ -151,6 +115,8 @@ namespace WPF.GIS.Example.ViewModels.Maps
 
             //        #endregion
             //    }
+            #endregion
+
             await base.OnActivateAsync(cancellationToken);
         }
 
@@ -158,7 +124,8 @@ namespace WPF.GIS.Example.ViewModels.Maps
         {
             try
             {
-                MainMap.MapProvider = GMapProviders.GoogleHybridMap;
+                //MainMap.MapProvider = GMapProviders.GoogleHybridMap;
+                MainMap.MapProvider = GMapProviders.GoogleSatelliteMap;
                 MainMap.Position = new PointLatLng(37.648425, 126.904284);
                 MainMap.MinZoom = ZOOM_MIN;
                 MainMap.MaxZoom = ZOOM_MAX;
@@ -313,7 +280,7 @@ namespace WPF.GIS.Example.ViewModels.Maps
         private void MainMap_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var p = e.GetPosition(MainMap);
-            currentMarker.Position = MainMap.FromLocalToLatLng((int)p.X, (int)p.Y);
+            //currentMarker.Position = MainMap.FromLocalToLatLng((int)p.X, (int)p.Y);
             //MainMap.Bearing
             // Keyboard.Modifiers == ModifierKeys.Shift
             //if(MainMap.IsDragging &&
@@ -393,16 +360,51 @@ namespace WPF.GIS.Example.ViewModels.Maps
             //UpdateSymbol();
             Zoom = MainMap.Zoom;
 
-            var area = MainMap.ViewArea;
-            Debug.WriteLine($"Area : { area}");
+            Debug.WriteLine($"Area : {MainMap.ViewArea}");
 
+            CreateScaleBar();
+        }
+
+        private void CreateScaleBar()
+        {
             double scaleX = 0.0;
             var scale = "";
-            
-            
+
+            /* Scale
+             * Zoom : 17, Scale : 50m, Length : 1.5 cm
+             * Zoom : 16, Scale : 100m, Length : 1.5 cm
+             * Zoom : 15, Scale : 300m, Length : 2.5 cm
+             * Zoom : 14, Scale : 500m, Length : 2 cm 
+             * Zoom : 13, Scale : 1000m, Length : 2 cm
+             * 
+             * Zoom : 12, Scale : 3000m, Length : 2.2 cm
+             * Zoom : 11, Scale : 5000m, Length : 2.2 cm
+             * Zoom : 10, Scale : 10Km, Length : 2.2 cm
+             * Zoom : 9, Scale : 20Km, Length : 2 cm
+             * Zoom : 8, Scale : 30Km, Length : 1.7 cm
+             * Zoom : 7, Scale : 50Km, Length : 1.4 cm
+             * Zoom : 6, Scale : 100Km, Length : 1.4 cm
+             * 
+             */
 
             switch (Zoom)
             {
+                case 6:
+                    scaleX = 52.9;
+                    scale = "100Km";
+                    break;
+                case 7:
+                    scaleX = 52.9;
+                    scale = "50Km";
+                    break;
+                case 8:
+                    scaleX = 64.3;
+                    scale = "30Km";
+                    break;
+                case 9:
+                    scaleX = 75.6;
+                    scale = "20Km";
+                    break;
                 case 10:
                     scaleX = 83.1;
                     scale = "10Km";
@@ -454,6 +456,26 @@ namespace WPF.GIS.Example.ViewModels.Maps
 
             };
             NotifyOfPropertyChange(() => ScalePoints);
+        }
+
+        public void SetPoint()
+        {
+            if (currentMarker != null)
+                return;
+
+            currentMarker = new GMapMarker(MainMap.Position);
+            {
+                currentMarker.Shape = new CustomMarkerRed(MainMap, currentMarker, "custom position marker");
+                currentMarker.Offset = new Point(-15, -15);
+                currentMarker.ZIndex = int.MaxValue;
+                MainMap.Markers.Add(currentMarker);
+            }
+        }
+
+        public void ClearPoint()
+        {
+            MainMap.Markers.Remove(currentMarker);
+            currentMarker.Clear();
         }
 
         public void SetBoundary()
@@ -591,7 +613,7 @@ namespace WPF.GIS.Example.ViewModels.Maps
         // zones list
         List<GMapMarker> Circles = new List<GMapMarker>();
         public const int ZOOM_MAX = 20;
-        public const int ZOOM_MIN = 10;
+        public const int ZOOM_MIN = 6;
         public const double ZOOM_CURRENT = 16;
         #endregion
     }
