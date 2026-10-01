@@ -1,3 +1,22 @@
+# WPF GIS Map Example
+
+GMap.NET을 WPF 관제 화면에 적용하기 위한 예제입니다. 지도 컨트롤, 사용자 마커, ViewModel 기반 화면 구성과 좌표 기반 표시를 다룹니다.
+
+## 코드 구성
+
+- [WPF.GIS.Example/Controls](WPF.GIS.Example/Controls): 지도 컨트롤
+- [WPF.GIS.Example/CustomMarkers](WPF.GIS.Example/CustomMarkers): 마커 UI
+- [WPF.GIS.Example/ViewModels](WPF.GIS.Example/ViewModels): 지도와 화면 상태
+
+## 개발 환경
+
+Windows / .NET Framework 4.8 / WPF와 GMap.NET이 필요합니다. 프로젝트 파일은 저장소 밖의 GMap.NET Core와 WindowsPresentation 소스를 참조합니다. 해당 소스를 준비하고 경로를 맞춘 뒤 빌드해야 합니다.
+
+지도 제공자와 캐시 설정에 따라 온라인·오프라인 동작이 달라집니다. 아래 기존 문서의 요구사항 목록은 개발 목표를 포함하므로, 모두 구현·검증된 기능 목록으로 해석하지 않습니다.
+
+<details>
+<summary>기존 개발 기록 및 참고 자료</summary>
+
 # GMAP.NET GIS Map Test
 
 ### Goal
@@ -139,4 +158,6 @@
 
       1) 지도 데이터 연동 일부 오류 사항 해소하였다.  
       2) 줌 연동 축적 최대:20, 최소:6 범위를 연동하였다.  
-      3) 선택위치 표시 마커 메뉴컨트롤 연동하였다.  
+      3) 선택위치 표시 마커 메뉴컨트롤 연동하였다.
+
+</details>
